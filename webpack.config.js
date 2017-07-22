@@ -1,5 +1,12 @@
 var path = require('path')
 var  HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
+
+var extractSass = new ExtractTextPlugin({
+    filename: "[name].[contenthash].css",
+    disable: process.env.NODE_ENV === "development"
+});
+
 module.exports = {
     entry: {
         index: './src/index.ts'
@@ -13,11 +20,15 @@ module.exports = {
             },
             {
                 test: /\.styl$/,
-                use: [
-                    'style-loader',
-                    'css-loader',
-                    'stylus-loader'
-                ]
+                use: extractSass.extract({
+                    use: [{
+                        loader: "css-loader"
+                    }, {
+                        loader: "stylus-loader"
+                    }],
+                    // 在开发环境使用 style-loader
+                    fallback: "style-loader"
+                })
             }
         ]
     },
@@ -26,7 +37,8 @@ module.exports = {
             title: 'Webpack TypeScript',
             favicon: 'favicon.ico',
             template: './index.html' // 基础html模板
-        })
+        }),
+        extractSass
     ],
     devServer: {
         // 配置监听端口
