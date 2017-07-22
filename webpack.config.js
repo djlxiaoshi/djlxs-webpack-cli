@@ -1,11 +1,17 @@
 var path = require('path')
+var webpack = require('webpack')
 var  HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
+
 var extractSass = new ExtractTextPlugin({
     filename: "[name].[contenthash].css",
-    disable: process.env.NODE_ENV === "development"
+    disable: process.env.NODE_ENV === "development" // 开发环境中不会生成独立的CSS文件
 });
+
+console.log('环境变量', process.env.NODE_ENV)
+
+
 
 module.exports = {
     entry: {
@@ -14,9 +20,27 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.(html)$/,
+                use: {
+                    loader: 'html-loader',
+                    options: {
+                    }
+                }
+            },
+            {
                 test: /\.tsx?$/,
                 use: 'ts-loader',
                 exclude: /node_modules/
+            },
+
+            {
+                test:  /\.(png|svg|jpg|gif)$/,
+                use: [{
+                    loader: 'url-loader',
+                    options: {
+                        limit: 20000
+                    }
+                }]
             },
             {
                 test: /\.styl$/,

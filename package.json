@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
-    "dev": "webpack-dev-server -d --hot --progress --colors --env.dev"
+    "build": "set NODE_ENV=production&&webpack -p --progress --colors",
+    "dev": "set NODE_ENV=development&&webpack-dev-server -d --hot --inline --colors --progress --env.dev  "
   },
   "keywords": [
     "djlxs-webpack-cli"
@@ -16,12 +16,14 @@
   "devDependencies": {
     "css-loader": "^0.28.4",
     "extract-text-webpack-plugin": "^3.0.0",
+    "html-loader": "^0.4.5",
     "html-webpack-plugin": "^2.29.0",
     "style-loader": "^0.18.2",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
     "ts-loader": "^2.3.1",
     "typescript": "^2.4.2",
+    "url-loader": "^0.5.9",
     "webpack": "^3.3.0",
     "webpack-dev-server": "^2.5.1"
   }
