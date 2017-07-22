@@ -10,14 +10,22 @@ module.exports = {
                 test: /\.tsx?$/,
                 use: 'ts-loader',
                 exclude: /node_modules/
+            },
+            {
+                test: /\.styl$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'stylus-loader'
+                ]
             }
         ]
     },
     plugins: [
         new HtmlWebpackPlugin({
             title: 'Webpack TypeScript',
-            favicon: 'favicon.ico'
-            //template: './dist/index.html' // 基础html模板
+            favicon: 'favicon.ico',
+            template: './index.html' // 基础html模板
         })
     ],
     devServer: {
